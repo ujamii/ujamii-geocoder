@@ -1,3 +1,7 @@
+## 0.2.1 (March 28, 2018)
+  - [BUGFIX] improved readme
+  - fixed changelog formatting
+
 ## 0.2.0 (March 28, 2018)
   - [TASK] added readme 
   - [FEATURE] improved configuration possibilities
