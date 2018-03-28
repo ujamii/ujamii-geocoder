@@ -15,12 +15,12 @@ Currently only works in composer mode of TYPO3, so
 
 ```json
 "repositories": [
-    {
-      "name": "ujamii/ujamii-geocoder",
-      "type": "vcs",
-      "url": "git@github.com:ujamii/ujamii-geocoder.git"
-    }
-  ],
+	{
+	  "name": "ujamii/ujamii-geocoder",
+	  "type": "vcs",
+	  "url": "git@github.com:ujamii/ujamii-geocoder.git"
+	}
+],
 ```
 
 ```shell
@@ -38,14 +38,19 @@ Just add a new config array to the `ctrl` section of your TCA.
 ];
 ```
 
+And provide a method (e.g. in an entity or helper class) to generate a compound
+address string based on the database data of one entity (example below).
+
 ### Options
 
 Those options are possible:
 
 **triggerFields (mandatory)**
+
 Changes in those fields will trigger the process of geocoding.
 
 **getAddressString (mandatory)**
+
 A method called via `TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction` which is supposed
 to return a complete address string. The first parameter provided to this methid is the merged
 data array (unchanged entity data from db + changed values from the backend form).
@@ -58,24 +63,31 @@ public function getAddressString($dataArray) {
 ```
 
 **locale** (default: de)
+
 The locale which is used in the geocoder. 
 
 **latField** (default: lat)
+
 Name of the target field for the latitude value.
 
 **lngField** (default: lng)
+
 Name of the target field for the longitude value.
 
 **httpClientClass** (default: \Http\Adapter\Guzzle6\Client::class)
+
 Class name of the http client, see [possible packages](https://packagist.org/providers/php-http/client-implementation)
 
 **httpClientConfig** (default: [])
+
 Possible options for the http client like proxy settings and so on.
 
 **providerClass** (default: \Geocoder\Provider\GoogleMaps\GoogleMaps::class)
+
 Class name of the provider, see [possible packages](https://packagist.org/providers/geocoder-php/provider-implementation)
 
 **geocoderClass** (default: \Geocoder\StatefulGeocoder::class)
+
 Class name of the geocoder.
 
 ## Example
@@ -90,7 +102,7 @@ or `typo3conf/ext/your_extension/Configuration/TCA/tx_ext_domain_model_entity.ph
 ```php
 $GLOBALS['TCA']['tx_news_domain_model_news']['ctrl']['geocoder'] = [
 	'triggerFields' => ['street', 'zip', 'city'],
-    'getAddressString' => 'Your\Namespace\Domain\Model\YourEntity->getAddressString'
+	'getAddressString' => 'Your\Namespace\Domain\Model\YourEntity->getAddressString'
 ];
 ```
 
