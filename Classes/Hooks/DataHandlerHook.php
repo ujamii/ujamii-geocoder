@@ -50,7 +50,7 @@ class DataHandlerHook {
 					$stringToGeocode = GeneralUtility::callUserFunction( $geocoderConfig['getAddressString'], $mergedData, $this );
 
 					/* @var $httpClient HttpClient */
-					$httpClient = GeneralUtility::makeInstance( $geocoderConfig['httpClientClass'], $geocoderConfig['httpClientConfig'] );
+					$httpClient = GeneralUtility::makeInstance( $geocoderConfig['httpClientClass'] );
 					/* @var $provider Provider */
 					$provider = GeneralUtility::makeInstance( $geocoderConfig['providerClass'], $httpClient);
 					/* @var $geocoder Geocoder */
@@ -80,7 +80,6 @@ class DataHandlerHook {
 	 */
 	protected function checkGeocoderConfig(array $tableTca) {
 		$defaults = [
-			'httpClientConfig' => [],
 			'locale' => 'de',
 			'latField' => 'lat',
 			'lngField' => 'lng',

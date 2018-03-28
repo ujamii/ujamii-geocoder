@@ -78,10 +78,6 @@ Name of the target field for the longitude value.
 
 Class name of the http client, see [possible packages](https://packagist.org/providers/php-http/client-implementation)
 
-**httpClientConfig** (default: [])
-
-Possible options for the http client like proxy settings and so on.
-
 **providerClass** (default: \Geocoder\Provider\GoogleMaps\GoogleMaps::class)
 
 Class name of the provider, see [possible packages](https://packagist.org/providers/geocoder-php/provider-implementation)
