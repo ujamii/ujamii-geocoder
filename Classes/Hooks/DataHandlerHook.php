@@ -2,6 +2,9 @@
 
 namespace Ujamii\UjamiiGeocoder\Hooks;
 
+use Geocoder\Query\GeocodeQuery;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Class DataHandlerHook
  * @package Ujamii\UjamiiGeocoder\Hooks
@@ -17,7 +20,7 @@ class DataHandlerHook {
 	 *
 	 * @see \TYPO3\CMS\Core\DataHandling\DataHandler::process_datamap
 	 */
-	public function processDatamap_postProcessFieldArray($status, $table, $uid, $fieldArray, $dataHandler) {
+	public function processDatamap_postProcessFieldArray($status, $table, $uid, &$fieldArray, &$dataHandler) {
 		if (isset($GLOBALS['TCA'][$table]['ctrl']['geocoder'])) {
 			try {
 				$geocoderConfig = $this->checkGeocoderConfig($GLOBALS['TCA'][$table]);
@@ -41,16 +44,19 @@ class DataHandlerHook {
 						$origData = array();
 					}
 					$mergedData = array_merge($origData, $fieldArray);
-					$stringToGeocode = call_user_func($geocoderConfig['getAddressString'], $mergedData);
+					$stringToGeocode = GeneralUtility::callUserFunction($geocoderConfig['getAddressString'], $mergedData, $this);
 
 					$httpClient = new \Http\Adapter\Guzzle6\Client();
 					$provider = new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient);
 					$geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
 
-					$result = $geocoder->geocodeQuery(GeocodeQuery::create('Buckingham Palace, London'));
-					//						$fieldArray['lat'] = $coords->lat;
-					//						$fieldArray['lng'] = $coords->lng;
+					$result = $geocoder->geocodeQuery(GeocodeQuery::create($stringToGeocode));
+					if (!$result->isEmpty()) {
+						$firstResult = $result->first();
 
+						$fieldArray[$geocoderConfig['latField']] = $firstResult->getCoordinates()->getLatitude();
+						$fieldArray[$geocoderConfig['lngField']] = $firstResult->getCoordinates()->getLongitude();
+					}
 				}
 			} catch (\Exception $e) {
 				//TODO: write to log?
@@ -74,11 +80,6 @@ class DataHandlerHook {
 					throw new \LogicException(sprintf('triggerField "%s" not set in TCA|tableName|columns|fieldName', $triggerField));
 				}
 			}
-		}
-
-		// check if getAddressString is callable
-		if (!is_callable($config['getAddressString'])) {
-			throw new \LogicException('getAddressString is not callable in TCA|tableName|ctrl|geocoder|getAddressString');
 		}
 
 		// make sure there are target fields set.
