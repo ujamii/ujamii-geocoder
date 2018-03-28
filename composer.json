@@ -2,6 +2,7 @@
     "name": "ujamii/ujamii-geocoder",
     "type": "typo3-cms-extension",
     "description": "Connecting http://geocoder-php.org/Geocoder with TYPO3 DataHandler API",
+    "license": "MIT",
     "authors": [
         {
             "name": "Michael Grundk\u00f6tter",

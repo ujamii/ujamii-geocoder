@@ -111,5 +111,4 @@ public function getAddressString($dataArray) {
 
 ## TODOs
 
-* publish on packagist
 * publish in TER
