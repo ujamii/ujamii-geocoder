@@ -1,5 +1,7 @@
 ## 0.2.0 (March 28, 2018)
-  - [TASK] added readme [FEATURE] improved configuration possibilities [FEATURE] added exception logging
+  - [TASK] added readme 
+  - [FEATURE] improved configuration possibilities
+  - [FEATURE] added exception logging
   - [BUGFIX] first working version of geocoding as hook
 
 ## 0.1.1 (March 28, 2018)
