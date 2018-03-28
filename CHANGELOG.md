@@ -1,3 +1,6 @@
+## 0.2.2 (March 28, 2018)
+  - [BUGFIX] removed http client options as they are not supported in all the constructors
+
 ## 0.2.1 (March 28, 2018)
   - [BUGFIX] improved readme
   - fixed changelog formatting
