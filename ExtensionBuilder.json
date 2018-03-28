@@ -1,0 +1,39 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [],
+        "description": "Connecting http:\/\/geocoder-php.org\/Geocoder with TYPO3 DataHandler API",
+        "emConf": {
+            "category": "services",
+            "custom_category": "",
+            "dependsOn": "typo3 => 8.7.0-8.7.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": true,
+            "sourceLanguage": "en",
+            "state": "stable",
+            "targetVersion": "8.7.0-8.7.99",
+            "version": "1.0.0"
+        },
+        "extensionKey": "ujamii_geocoder",
+        "name": "Geocoder Toolkit",
+        "originalExtensionKey": "",
+        "originalVendorName": "",
+        "persons": [
+            {
+                "company": "ujamii GmbH",
+                "email": "mg@ujamii.com",
+                "name": "Michael Grundk\u00f6tter",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [],
+        "vendorName": "Ujamii"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2018-03-28 05:16",
+        "extension_builder_version": "8.7.0",
+        "be_user": " (1)"
+    }
+}
