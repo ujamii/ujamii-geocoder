@@ -1,3 +1,6 @@
+## 0.2.4 (March 28, 2018)
+  - [TASK] removed "add repository" part from readme
+
 ## 0.2.3 (March 28, 2018)
   - [TASK] added license and registered at packagist
 
