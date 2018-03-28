@@ -1,3 +1,6 @@
+## 0.2.3 (March 28, 2018)
+  - [TASK] added license and registered at packagist
+
 ## 0.2.2 (March 28, 2018)
   - [BUGFIX] removed http client options as they are not supported in all the constructors
 
