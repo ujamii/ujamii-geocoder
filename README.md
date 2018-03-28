@@ -13,16 +13,6 @@ how your entity "looks like" in the eyes of the geocoder via TCA anf that's it.
 
 Currently only works in composer mode of TYPO3, so
 
-```json
-"repositories": [
-	{
-	  "name": "ujamii/ujamii-geocoder",
-	  "type": "vcs",
-	  "url": "git@github.com:ujamii/ujamii-geocoder.git"
-	}
-],
-```
-
 ```shell
 composer require ujamii/ujamii-geocoder
 ```
