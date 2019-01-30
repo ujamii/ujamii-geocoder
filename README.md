@@ -42,7 +42,7 @@ Changes in those fields will trigger the process of geocoding.
 **getAddressString (mandatory)**
 
 A method called via `TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction` which is supposed
-to return a complete address string. The first parameter provided to this methid is the merged
+to return a complete address string. The first parameter provided to this method is the merged
 data array (unchanged entity data from db + changed values from the backend form).
 
 Example:
