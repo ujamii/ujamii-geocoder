@@ -72,6 +72,10 @@ Class name of the http client, see [possible packages](https://packagist.org/pro
 
 Class name of the provider, see [possible packages](https://packagist.org/providers/geocoder-php/provider-implementation)
 
+**providerParams**
+
+Optional parameters for the provider. (e.g. an API key for Google Maps)
+
 **geocoderClass** (default: \Geocoder\StatefulGeocoder::class)
 
 Class name of the geocoder.
@@ -88,7 +92,12 @@ or `typo3conf/ext/your_extension/Configuration/TCA/tx_ext_domain_model_entity.ph
 ```php
 $GLOBALS['TCA']['tx_news_domain_model_news']['ctrl']['geocoder'] = [
 	'triggerFields' => ['street', 'zip', 'city'],
-	'getAddressString' => 'Your\Namespace\Domain\Model\YourEntity->getAddressString'
+	'getAddressString' => 'Your\Namespace\Domain\Model\YourEntity->getAddressString',
+	'providerParams' => [
+        0 => null,
+        1 => null,
+        2 => '<GMAPS_API_KEY>'
+    ]
 ];
 ```
 
@@ -99,6 +108,19 @@ public function getAddressString($dataArray) {
 }
 ```
 
+## Usage as command or in scheduler
+
+The extension also provides command to populate rows with 0 values for the lat/lng fields. 
+It reads the configuration from TCA and iterates through each configured table, searching with lat = 0 OR lng = 0. For each matching row, the geocoding
+process is executed and the values are then updated in the database. The command produces some log output to track what has been done.
+
+As it is a default extbase command controller, this can also be called by a scheduler task
+
+```php
+php typo3/cli_dispatch.phpsh extbase geocode:fillmissinggeocodingdata
+```
+
 ## TODOs
 
 * publish in TER
+* right now providerParams[0] is always filled with the httpClient, which may not work for all providers
