@@ -1,3 +1,11 @@
+## 0.3.0 (January 30, 2019)
+  - [FEATURE] added command controller 
+  - [TASK] refactoring to minimize duplication of code 
+  - [FEATURE] added providerParams, so API keys and other config may be added 
+  - [DOC] added command controller description and example for new providerParams 
+  - [BUGFIX] added round() to lat/lng values to prevent TYPO3 errors because of db field length (double6 is recommended for lat/lng fields)
+  - [DOC] fixed typo
+
 ## 0.2.4 (March 28, 2018)
   - [TASK] removed "add repository" part from readme
 
