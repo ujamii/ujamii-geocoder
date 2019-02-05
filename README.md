@@ -1,5 +1,7 @@
 # ujamii-geocoder
 
+[![Packagist](https://img.shields.io/packagist/v/ujamii/ujamii-geocoder.svg?colorB=green&style=flat)](https://packagist.org/packages/ujamii/ujamii-geocoder)
+
 Connecting http://geocoder-php.org/Geocoder with TYPO3 DataHandler API.
 With this extension you can easily add geo data to records while they are changed by editors in the TYPO3 backend. You just have to configure
 how your entity "looks like" in the eyes of the geocoder via TCA anf that's it.
