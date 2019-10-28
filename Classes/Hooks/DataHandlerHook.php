@@ -4,6 +4,7 @@ namespace Ujamii\UjamiiGeocoder\Hooks;
 
 use Geocoder\Geocoder;
 use Geocoder\Query\GeocodeQuery;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Ujamii\UjamiiGeocoder\Service\GeoCoderService;
 
@@ -39,8 +40,14 @@ class DataHandlerHook {
 
 				if ( $triggered ) {
 					if ( is_numeric( $uid ) ) {
-						$res      = $GLOBALS['TYPO3_DB']->exec_SELECTquery( '*', $table, 'uid = ' . $uid );
-						$origData = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+						/** @var QueryBuilder $queryBuilder */
+                        			$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+                        			$res = $queryBuilder
+                            				->select('*')
+                            				->from($table)
+                            				->where($queryBuilder->expr()->eq('uid', $uid))
+                            				->execute();
+                        			$origData = $res->fetchAll();
 					} else {
 						$origData = array();
 					}
