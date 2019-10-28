@@ -47,7 +47,7 @@ class DataHandlerHook {
                             				->from($table)
                             				->where($queryBuilder->expr()->eq('uid', $uid))
                             				->execute();
-                        			$origData = $res->fetchAll();
+                        			$origData = $res->fetch();
 					} else {
 						$origData = array();
 					}
