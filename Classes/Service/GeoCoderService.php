@@ -11,7 +11,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class GeoCoderService
  * @package Ujamii\UjamiiGeocoder\Service
  */
-class GeoCoderService {
+class GeoCoderService
+{
 
     /**
      * @param array $tableTca The TCA array for one table.
@@ -19,46 +20,48 @@ class GeoCoderService {
      * @return array The checked ['ctrl']['geocoder'] part of the given array.
      * @throws \LogicException
      */
-    public static function checkGeocoderConfig(array $tableTca) {
+    public static function checkGeocoderConfig(array $tableTca): array
+    {
         $defaults = [
-            'locale' => 'de',
-            'latField' => 'lat',
-            'lngField' => 'lng',
+            'locale'          => 'de',
+            'latField'        => 'lat',
+            'lngField'        => 'lng',
             'httpClientClass' => \Http\Adapter\Guzzle6\Client::class,
-            'providerClass' => \Geocoder\Provider\GoogleMaps\GoogleMaps::class,
-            'geocoderClass' => \Geocoder\StatefulGeocoder::class
+            'providerClass'   => \Geocoder\Provider\GoogleMaps\GoogleMaps::class,
+            'geocoderClass'   => \Geocoder\StatefulGeocoder::class
         ];
-        $config = array_merge($defaults, $tableTca['ctrl']['geocoder']);
+        $config   = array_merge($defaults, $tableTca['ctrl']['geocoder']);
 
         // there needs to be at least one field configured to trigger the geocoding process.
-        if (!isset($config['triggerFields']) || !is_array($config['triggerFields']) || empty($config['triggerFields'])) {
+        if ( ! isset($config['triggerFields']) || ! is_array($config['triggerFields']) || empty($config['triggerFields'])) {
             throw new \LogicException('no triggerFields set in TCA|tableName|ctrl|geocoder');
         } else {
             foreach ($config['triggerFields'] as $triggerField) {
-                if (!isset($tableTca['columns'][$triggerField])) {
+                if ( ! isset($tableTca['columns'][$triggerField])) {
                     throw new \LogicException(sprintf('triggerField "%s" not set in TCA|tableName|columns|fieldName', $triggerField));
                 }
             }
         }
 
         // make sure there are target fields set.
-        if (!isset($tableTca['columns'][$config['latField']])) {
+        if ( ! isset($tableTca['columns'][$config['latField']])) {
             throw new \LogicException(sprintf('latField "%s" not set in TCA|tableName|columns|fieldName', $config['latField']));
         }
-        if (!isset($tableTca['columns'][$config['lngField']])) {
+        if ( ! isset($tableTca['columns'][$config['lngField']])) {
             throw new \LogicException(sprintf('lngField "%s" not set in TCA|tableName|columns|fieldName', $config['lngField']));
         }
 
         // verify class configuration
-        if (!is_subclass_of($config['httpClientClass'], HttpClient::class)) {
+        if ( ! is_subclass_of($config['httpClientClass'], HttpClient::class)) {
             throw new \LogicException(sprintf('httpClientClass "%s" is not of type "%s"', $config['httpClientClass'], HttpClient::class));
         }
-        if (!is_subclass_of($config['providerClass'], Provider::class)) {
+        if ( ! is_subclass_of($config['providerClass'], Provider::class)) {
             throw new \LogicException(sprintf('providerClass "%s" is not of type "%s"', $config['providerClass'], Provider::class));
         }
-        if (!is_subclass_of($config['geocoderClass'], Geocoder::class)) {
+        if ( ! is_subclass_of($config['geocoderClass'], Geocoder::class)) {
             throw new \LogicException(sprintf('geocoderClass "%s" is not of type "%s"', $config['geocoderClass'], Geocoder::class));
         }
+
         return $config;
     }
 
@@ -67,10 +70,10 @@ class GeoCoderService {
      *
      * @return HttpClient
      */
-    public static function getHttpClient($geocoderConfig)
+    public static function getHttpClient($geocoderConfig): HttpClient
     {
         /* @var $httpClient HttpClient */
-        return GeneralUtility::makeInstance( $geocoderConfig['httpClientClass'] );
+        return GeneralUtility::makeInstance($geocoderConfig['httpClientClass']);
     }
 
     /**
@@ -79,16 +82,16 @@ class GeoCoderService {
      *
      * @return Provider
      */
-    public static function getProvider($geocoderConfig, HttpClient $httpClient)
+    public static function getProvider($geocoderConfig, HttpClient $httpClient): Provider
     {
         /* @var $provider Provider */
-        if (!is_array($geocoderConfig['providerParams'])) {
+        if ( ! is_array($geocoderConfig['providerParams'])) {
             $geocoderConfig['providerParams'] = [];
         }
         $geocoderConfig['providerParams'][0] = $httpClient;
         ksort($geocoderConfig['providerParams']);
 
-        return GeneralUtility::makeInstance( $geocoderConfig['providerClass'], ...$geocoderConfig['providerParams']);
+        return GeneralUtility::makeInstance($geocoderConfig['providerClass'], ...$geocoderConfig['providerParams']);
     }
 
     /**
@@ -96,12 +99,13 @@ class GeoCoderService {
      *
      * @return Geocoder
      */
-    public static function getGeoCoder($geocoderConfig)
+    public static function getGeoCoder($geocoderConfig): Geocoder
     {
         $httpClient = GeoCoderService::getHttpClient($geocoderConfig);
-        $provider = GeoCoderService::getProvider($geocoderConfig, $httpClient);
+        $provider   = GeoCoderService::getProvider($geocoderConfig, $httpClient);
+
         /* @var $geocoder Geocoder */
-        return GeneralUtility::makeInstance( $geocoderConfig['geocoderClass'], $provider, $geocoderConfig['locale'] );
+        return GeneralUtility::makeInstance($geocoderConfig['geocoderClass'], $provider, $geocoderConfig['locale']);
     }
 
 }

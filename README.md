@@ -116,10 +116,10 @@ The extension also provides command to populate rows with 0 values for the lat/l
 It reads the configuration from TCA and iterates through each configured table, searching with lat = 0 OR lng = 0. For each matching row, the geocoding
 process is executed and the values are then updated in the database. The command produces some log output to track what has been done.
 
-As it is a default extbase command controller, this can also be called by a scheduler task
+As it is a default Symfony console command, this can also be called by a scheduler task.
 
 ```php
-php typo3/cli_dispatch.phpsh extbase geocode:fillmissinggeocodingdata
+vendor/bin/typo3 geocoder:fillmissingdata
 ```
 
 ## TODOs
