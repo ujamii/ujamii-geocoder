@@ -1,3 +1,9 @@
+## 1.0.0 (February 06, 2020)
+  - [FEATURE] this extension is now TYPO3 v9 compatible, using QueryBuilder Logger and ConsoleCommand.
+  - Merge pull request #1 from develth/patch-1
+    - Added QueryBuilder compatibility
+  - added packagist badge
+
 ## 0.3.0 (January 30, 2019)
   - [FEATURE] added command controller 
   - [TASK] refactoring to minimize duplication of code 
