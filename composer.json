@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "typo3/cms-core": "^9.5 <10",
+        "typo3/cms-core": "^10.4.17",
         "geocoder-php/google-maps-provider": "^4.2",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/message": "^1.6"
